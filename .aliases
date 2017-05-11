@@ -1,0 +1,94 @@
+#
+#                  █████  ██     ██  █████  ███████ ███████ ███████
+#                 ██   ██ ██     ██ ██   ██ ██      ██      ██
+#                 ███████ ██     ██ ███████ ███████ ███████ ███████
+#                 ██   ██ ██     ██ ██   ██      ██ ██           ██
+#                 ██   ██ ██████ ██ ██   ██ ███████ ███████ ███████
+#
+
+
+#################################################################
+# UTILS
+#################################################################
+function reload {
+    source $HOME/.vars
+    source $HOME/.aliases
+}
+
+#################################################################
+# FILES AND DIRECTORIES
+#################################################################
+alias cl="clear"
+alias ..="cd .."
+alias ls="ls --color"
+alias sl="ls"
+
+
+#################################################################
+# SERVICES
+#################################################################
+alias start="sudo systemctl start"
+alias stop="sudo systemctl stop"
+alias status="sudo systemctl status"
+alias restart="sudo systemctl restart"
+
+
+#################################################################
+# GIT
+#################################################################
+alias cgs="clear; git status -sb"
+alias ck="git checkout"
+alias gg="git grep"
+alias gc="git commit"
+alias ga="git add"
+alias gs="git stash"
+alias gsa="git stash apply"
+alias gf="git fetch"
+
+function push {
+    if [ -z "$1" ]; then
+        BRANCH=`git rev-parse --abbrev-ref HEAD`
+    else
+        BRANCH="$1"
+    fi
+
+    echo "Pushing to $BRANCH"
+    git push origin $BRANCH
+}
+
+function pull {
+    git fetch origin
+
+    if [ -z "$1" ]; then
+        BRANCH=`git rev-parse --abbrev-ref HEAD`
+    else
+        BRANCH="$1"
+    fi
+
+    echo "Pulling from $BRANCH"
+    git pull origin $BRANCH --rebase
+}
+
+function rebase {
+    echo "Rebasing on $1"
+    git rebase origin $1
+}
+
+
+# Timendo
+alias tdb="psql -U postgres -d timendo"
+alias tui="cd $WHITEBEAR/TimendoMobile/app"
+alias tapi="cd $WHITEBEAR/TimendoServer/src"
+alias ww="cd $WHITEBEAR/web/whitebear-cms"
+alias wb="cd $WHITEBEAR"
+
+# Personal
+alias personal="cd $PROJECTS/Personal"
+alias cpp="cd $PROJECTS/Personal/C++"
+
+# System
+alias swapctrl="sudo loadkeys /usr/share/kbd/keymaps/personal.map"
+alias bright="echo $1 > /sys/class/backlight/intel_backlight/brightness"
+
+# Network
+alias torrents="transmission-remote-cli"
